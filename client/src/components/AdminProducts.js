@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductForm from './ProductForm';
+import BASE_URL from '../config';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ export default function AdminProducts() {
   async function load() {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/products');
+      const res = await fetch(`${BASE_URL}/api/products`);
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -25,7 +26,7 @@ export default function AdminProducts() {
   async function remove(id) {
     if (!confirm('Are you sure? This product will be deleted permanently.')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/products/${id}`, {
         method: 'DELETE',
         headers: { Authorization: 'Bearer ' + getToken() }
       });
@@ -71,7 +72,7 @@ export default function AdminProducts() {
             {products.map(p => (
               <div className="card" key={p._id}>
                 {p.imagePath ? (
-                  <img src={`http://localhost:5000${p.imagePath}`} alt={p.name} />
+                  <img src={`${BASE_URL}${p.imagePath}`} alt={p.name} />
                 ) : (
                   <div style={{ width: '100%', height: '200px', background: '#ecf0f1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7f8c8d' }}>
                     No Image

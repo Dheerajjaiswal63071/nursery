@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BASE_URL from '../config';
 
 export default function ProductForm({ onSaved, editing, setEditing }) {
   const [name, setName] = useState('');
@@ -18,7 +19,7 @@ export default function ProductForm({ onSaved, editing, setEditing }) {
       setDescription(editing.description || '');
       setCategory(editing.category || 'indoor');
       setImagePath(editing.imagePath || '');
-      setPreview(editing.imagePath ? `http://localhost:5000${editing.imagePath}` : null);
+      setPreview(editing.imagePath ? `${BASE_URL}${editing.imagePath}` : null);
       setImage(null);
     }
   }, [editing]);
@@ -38,7 +39,7 @@ export default function ProductForm({ onSaved, editing, setEditing }) {
   async function uploadFile(file) {
     const fd = new FormData();
     fd.append('image', file);
-    const res = await fetch('http://localhost:5000/api/products/upload', {
+    const res = await fetch(`${BASE_URL}/api/products/upload`, {
       method: 'POST',
       headers: { Authorization: 'Bearer ' + getToken() },
       body: fd
@@ -66,13 +67,13 @@ export default function ProductForm({ onSaved, editing, setEditing }) {
       const token = getToken();
       let res;
       if (editing) {
-        res = await fetch(`http://localhost:5000/api/products/${editing._id}`, {
+        res = await fetch(`${BASE_URL}/api/products/${editing._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
           body: JSON.stringify(payload)
         });
       } else {
-        res = await fetch('http://localhost:5000/api/products', {
+        res = await fetch(`${BASE_URL}/api/products`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
           body: JSON.stringify(payload)
@@ -110,6 +111,7 @@ export default function ProductForm({ onSaved, editing, setEditing }) {
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="e.g., Monstera Deliciosa"
+
             required
           />
 

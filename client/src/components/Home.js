@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import BASE_URL from '../config';
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${BASE_URL}/api/products`)
       .then(r => r.json())
       .then(data => {
         setFeatured(data);
@@ -42,7 +43,7 @@ export default function Home() {
             {featured.slice(0, 4).map(p => (
               <div className="card" key={p._id}>
                 {p.imagePath ? (
-                  <img src={`http://localhost:5000${p.imagePath}`} alt={p.name} />
+                  <img src={`${BASE_URL}${p.imagePath}`} alt={p.name} />
                 ) : (
                   <div style={{ width: '100%', height: '200px', background: '#ecf0f1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7f8c8d' }}>
                     No Image

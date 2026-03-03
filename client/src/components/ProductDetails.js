@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import BASE_URL from '../config';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -7,7 +8,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`${BASE_URL}/api/products/${id}`)
       .then(r => r.json())
       .then(data => {
         setProduct(data);
@@ -37,7 +38,7 @@ export default function ProductDetails() {
     <div className="product-detail">
       <div>
         {product.imagePath ? (
-          <img src={`http://localhost:5000${product.imagePath}`} alt={product.name} />
+          <img src={`${BASE_URL}${product.imagePath}`} alt={product.name} />
         ) : (
           <div style={{
             width: '100%',

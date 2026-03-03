@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import BASE_URL from '../config';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,7 @@ export default function Products() {
   const categoryFilter = queryParams.get('category');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${BASE_URL}/api/products`)
       .then(r => r.json())
       .then(data => {
         setProducts(data);
@@ -72,7 +73,7 @@ export default function Products() {
           {filteredProducts.map(p => (
             <div className="card" key={p._id}>
               {p.imagePath ? (
-                <img src={`http://localhost:5000${p.imagePath}`} alt={p.name} />
+                <img src={`${BASE_URL}${p.imagePath}`} alt={p.name} />
               ) : (
                 <div style={{ width: '100%', height: '200px', background: '#ecf0f1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7f8c8d' }}>
                   No Image
