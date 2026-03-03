@@ -31,7 +31,7 @@ app.get('/', (req, res) => res.send({ msg: 'Nursery API running' }));
 
 // ensure admin user exists
 const Admin = require('./models/Admin');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 async function ensureAdmin() {
   try {
